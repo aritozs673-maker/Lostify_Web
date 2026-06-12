@@ -1,0 +1,163 @@
+:root {
+    --wine: #561c24;
+    --brown-red: #6d2932;
+    --beige: #c7b7a3;
+    --cream: #e8d8c4;
+    --white: #ffffff;
+    --text: #3b3b3b;
+    --gray-light: #f4f4f4;
+}
+
+/* =========================
+   RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: var(--gray-light);
+    color: var(--text);
+}
+
+/* =========================
+   HEADER
+========================= */
+.main-header {
+    background: var(--wine);
+    color: var(--white);
+    padding: 15px 25px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 22px;
+    font-weight: bold;
+}
+
+/* =========================
+   HERO
+========================= */
+.hero {
+    height: calc(100vh - 60px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(
+        135deg,
+        var(--cream),
+        var(--gray-light)
+    );
+}
+
+.hero-content {
+    max-width: 700px;
+    text-align: center;
+    background: var(--white);
+    padding: 40px 30px;
+    border-radius: 16px;
+    border: 1px solid var(--cream);
+    box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+.hero-content h1 {
+    font-size: 32px;
+    color: var(--wine);
+    margin-bottom: 15px;
+}
+
+.hero-content p {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+    opacity: 0.85;
+    margin-bottom: 25px;
+}
+
+/* =========================
+   BOTONES HERO
+========================= */
+.hero-buttons {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* Reutilizando estilos que ya tienes */
+.btn-guardar,
+.btn-cancelar {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 18px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+/* Botón principal */
+.btn-guardar {
+    background: var(--wine);
+    color: var(--white);
+    border: none;
+}
+
+.btn-guardar:hover {
+    background: var(--brown-red);
+    transform: translateY(-2px);
+}
+
+/* Botón secundario */
+.btn-cancelar {
+    background: var(--beige);
+    color: var(--text);
+}
+
+.btn-cancelar:hover {
+    background: var(--cream);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   ANIMACIÓN
+========================= */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .hero-content {
+        padding: 30px 20px;
+    }
+
+    .hero-content h1 {
+        font-size: 24px;
+    }
+
+    .hero-buttons {
+        flex-direction: column;
+    }
+}

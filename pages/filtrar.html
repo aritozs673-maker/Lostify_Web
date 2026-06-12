@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lostify - Filtrar Objetos</title>
+<link rel="stylesheet" href="../assets/css/filtrar.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header class="main-header">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="logo">Lostify</div>
+        <div class="user-info"></div>
+    </header>
+<!-- SIDEBAR -->
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-header">Menú</div>
+    <ul class="sidebar-menu">
+        <li><a href="dashboard.html"><i class="fa-solid fa-home"></i> Dashboard</a></li>
+        <li><a href="perfil.html"><i class="fa-solid fa-user-pen"></i> Perfil</a></li>
+        <li><a href="mis-reportes.html"><i class="fa-solid fa-clipboard-list"></i> Mis Reportes</a></li>
+        <li><a href="../assets/documentos/Manual_de_Usuario.pdf" download="Manual_de_Usuario.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Usuario</a></li>
+            <li><a href="../assets/documentos/MANUAL_Tecnico.pdf" download="MANUAL_Tecnico.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Tecnico</a></li>
+        <li><button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</button></li>
+    </ul>
+</div>
+
+<div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+<div class="container">
+    <h1 class="titulo"><i class="fa fa-search"></i> Encuentra tus cosas</h1>
+    <p class="subtitulo">Busca objetos por nombre, categoría, ubicación, estado o fecha</p>
+
+    <div class="filtro-container">
+        <form id="filtroForm" class="filtro-form" onsubmit="return false;">
+            <div class="filtro-grid">
+                <div class="filtro-grupo">
+                    <label><i class="fa-solid fa-tag"></i> Nombre del objeto</label>
+                    <input type="text" id="filtro_nombre" placeholder="Ej: Mochila, Celular...">
+                </div>
+                <div class="filtro-grupo">
+                    <label><i class="fa-solid fa-list"></i> Categoría</label>
+                    <select id="filtro_categoria">
+                        <option value="">Todas las categorías</option>
+                    </select>
+                </div>
+                <div class="filtro-grupo">
+                    <label><i class="fa-solid fa-location-dot"></i> Ubicación</label>
+                    <select id="filtro_ubicacion">
+                        <option value="">Todas las ubicaciones</option>
+                    </select>
+                </div>
+                <div class="filtro-grupo">
+                    <label><i class="fa-solid fa-circle-info"></i> Estado</label>
+                    <select id="filtro_estado">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filtro-fechas">
+                <label><i class="fa-solid fa-calendar"></i> Rango de fechas</label>
+                <div class="fechas-grid">
+                    <input type="date" id="filtro_fecha_desde" placeholder="Desde">
+                    <span>hasta</span>
+                    <input type="date" id="filtro_fecha_hasta" placeholder="Hasta">
+                </div>
+            </div>
+            <div class="filtro-acciones">
+                <button type="button" class="btn-buscar" onclick="aplicarFiltros()">
+                    <i class="fa-solid fa-magnifying-glass"></i> Buscar
+                </button>
+                <button type="button" class="btn-limpiar" onclick="limpiarFiltros()">
+                    <i class="fa-solid fa-eraser"></i> Limpiar
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <!-- BOTÓN FIJO PARA CREAR REPORTE -->
+    <a href="crear-reporte.html" class="btn-flotante">
+        <i class="fa-solid fa-plus"></i> Crear Reporte
+    </a>
+
+    <!-- RESULTADOS -->
+    <div class="resultados-info">
+        <h3>Resultados encontrados: <span id="totalResultados">0</span></h3>
+    </div>
+    <div class="grid" id="resultadosGrid">
+        <div class="no-resultados"><p>Aún no hay resultados</p></div>
+    </div>
+</div>
+
+<script src="../assets/js/filtrar-objetos.js"></script>
+
+<style>
+/* BOTÓN FLUTANTE */
+.btn-flotante{
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: #561c24;
+    color: white;
+    padding: 16px 20px;
+    border-radius: 50px;
+    font-weight: bold;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,.2);
+    transition: 0.3s;
+    z-index: 1000;
+}
+
+.btn-flotante:hover{
+    background: #6d2932;
+}
+</style>
+</body>
+</html>

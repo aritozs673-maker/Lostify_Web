@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lostify - Mi Perfil</title>
+    <!-- Tu CSS -->
+    <link rel="stylesheet" href="../assets/css/perfil.css">
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+   <header class="main-header">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="logo">Lostify</div>
+        <div class="user-info"></div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">Menú</div>
+        <ul class="sidebar-menu">
+            <li><a href="../index.html"><i class="fa-solid fa-house"></i> Inicio</a></li>
+            <li><a href="filtrar.html"><i class="fa fa-search"></i> Buscar objetos</a></li>
+            <li><a href="mis-reportes.html"><i class="fa-solid fa-clipboard-list"></i> Mis Reportes</a></li>
+            <li><a href="../assets/documentos/Manual_de_Usuario.pdf" download="Manual_de_Usuario.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Usuario</a></li>
+            <li><a href="../assets/documentos/MANUAL_Tecnico.pdf" download="MANUAL_Tecnico.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Tecnico</a></li>
+            
+            <li><a href="login.html" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</a></li>
+        </ul>
+    </div>
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="container perfil-container">
+        <div class="perfil-card">
+            <div class="perfil-header">
+                <div class="perfil-avatar">
+                    <i class="fa-solid fa-user-circle"></i>
+                </div>
+                <h1 class="perfil-titulo">Mi Perfil</h1>
+                <p class="perfil-subtitulo">Gestiona tu información personal</p>
+            </div>
+
+            <!-- Mensaje de error/éxito -->
+            <div id="mensaje" class="alert" style="display: none;"></div>
+
+            <!-- Formulario -->
+            <form id="perfilForm" class="perfil-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name"><i class="fa-solid fa-user"></i> Nombre</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="apellido_paterno"><i class="fa-solid fa-user"></i> Apellido Paterno</label>
+                        <input type="text" id="apellido_paterno" name="apellido_paterno" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="apellido_materno"><i class="fa-solid fa-user"></i> Apellido Materno</label>
+                        <input type="text" id="apellido_materno" name="apellido_materno">
+                    </div>
+                    <div class="form-group">
+                        <label for="email"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <!-- Sección cambiar contraseña -->
+                <div class="password-section">
+                    <div class="password-header" onclick="togglePasswordSection()">
+                        <i class="fa-solid fa-key"></i>
+                        <span>Cambiar Contraseña</span>
+                        <i class="fa-solid fa-chevron-down" id="toggleIcon"></i>
+                    </div>
+                    <div class="password-fields" id="passwordFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="current_password"><i class="fa-solid fa-lock"></i> ContraseñaActual</label>
+                            <input type="password" id="current_password" name="current_password">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="password"><i class="fa-solid fa-lock"></i> Nueva Contraseña</label>
+                                <input type="password" id="password" name="password">
+                            </div>
+                            <div class="form-group">
+                                <label for="password_confirmation"><i class="fa-solid fa-lock"></i> Confirmar</label>
+                                <input type="password" id="password_confirmation" name="password_confirmation">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-actions">
+                    <button type="submit" class="btn-guardar">
+                        <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+                    </button>
+                    <a href="../index.html" class="btn-cancelar">Cancelar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- JS -->
+    <script src="../assets/js/perfil.js"></script>
+</body>
+</html>

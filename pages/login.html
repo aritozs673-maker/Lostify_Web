@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lostify Login</title>
+
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="../assets/css/login.css">
+
+</head>
+
+<body class="login-body">
+
+    <div class="login-box">
+        <h1>Lostify</h1>
+        <p class="sub">Ingreso Institucional</p>
+
+        <!-- ERROR DINÁMICO -->
+        <div id="errorBox" class="error-box" style="display:none;"></div>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label>Correo Institucional</label>
+                <input type="email" id="email" required>
+            </div>
+
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input type="password" id="password" required>
+            </div>
+
+            <button type="submit" class="btn-submit">Ingresar</button>
+
+            <div class="register-link">
+                ¿No tienes cuenta?
+                <a href="register.html">Crear cuenta</a>
+            </div>
+
+        </form>
+    </div>
+
+    <!-- JS LOGIN -->
+    <script src="../assets/js/login.js"></script>
+</body>
+</html>

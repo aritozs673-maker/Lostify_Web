@@ -1,0 +1,367 @@
+:root {
+    --wine: #561c24;
+    --brown-red: #6d2932;
+    --beige: #c7b7a3;
+    --cream: #e8d8c4;
+    --white: #ffffff;
+    --text: #3b3b3b;
+    --gray-light: #f4f4f4;
+}
+
+/* =========================
+   RESET
+========================= */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+body {
+    background: var(--beige);
+    color: var(--text);
+}
+
+/* =========================
+   HEADER
+========================= */
+.main-header {
+    background: var(--wine);
+    color: var(--white);
+    padding: 14px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+}
+
+.logo {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* =========================
+   CONTENEDOR
+========================= */
+.container {
+    max-width: 800px;
+    margin: auto;
+    padding: 25px;
+}
+
+/* TITULO */
+.titulo {
+    font-size: 26px;
+    margin-bottom: 20px;
+    color: var(--wine);
+    text-align: center;
+}
+
+/* =========================
+   FORMULARIO (CARD)
+========================= */
+form {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    padding: 25px;
+    border-radius: 16px;
+
+    box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+    border: 1px solid rgba(255,255,255,0.5);
+}
+
+/* =========================
+   GRID FORM
+========================= */
+.form-row {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+/* =========================
+   CAMPOS
+========================= */
+.form-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 6px;
+    color: var(--wine);
+}
+
+.form-group input,
+.form-group select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid var(--cream);
+    background: var(--gray-light);
+    outline: none;
+    transition: 0.2s;
+}
+
+.form-group input:focus,
+.form-group select:focus {
+    border-color: var(--wine);
+    background: var(--white);
+}
+
+/* =========================
+   BOTÓN CREAR
+========================= */
+.btn-crear {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    width: 100%;
+    margin-top: 10px;
+
+    padding: 12px;
+    border-radius: 10px;
+
+    background: var(--wine);
+    color: var(--white);
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+
+    transition: 0.3s;
+}
+
+.btn-crear:hover {
+    background: var(--brown-red);
+    transform: translateY(-2px);
+}
+.menu-btn {
+    font-size: 22px;
+    cursor: pointer;
+    color: var(--white);
+}
+
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: -260px;
+    width: 260px;
+    height: 100%;
+    background: var(--wine);
+    color: var(--white);
+    padding: 20px;
+    transition: 0.3s ease;
+    z-index: 2000;
+}
+
+.sidebar.active {
+    left: 0;
+}
+
+.sidebar-header {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    color: var(--cream);
+}
+
+.sidebar-menu {
+    list-style: none;
+}
+
+.sidebar-menu li {
+    margin: 15px 0;
+}
+
+.sidebar-menu a,
+.logout-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--white);
+    text-decoration: none;
+    font-size: 15px;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.sidebar-menu a:hover,
+.logout-btn:hover {
+    color: var(--beige);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+    }
+
+    .container {
+        padding: 15px;
+    }
+}
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    width: 400px;
+}
+
+.modal textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+/* =========================
+   OVERLAY
+========================= */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.5);
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 1500;
+}
+
+.overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* =========================
+   MENSAJES
+========================= */
+.mensaje {
+    padding: 15px 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-align: center;
+    position: fixed;
+    top: 80px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3000;
+    max-width: 90%;
+}
+
+.mensaje-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.mensaje-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* =========================
+   MODAL
+========================= */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: 0.3s;
+    z-index: 2000;
+}
+
+.modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 400px;
+}
+
+.modal-content h2 {
+    color: var(--wine);
+    margin-bottom: 15px;
+}
+
+.modal textarea {
+    width: 100%;
+    height: 100px;
+    margin-top: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid var(--cream);
+    resize: none;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.btn-guardar {
+    flex: 1;
+    padding: 10px;
+    background: var(--wine);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+.btn-cancelar {
+    flex: 1;
+    padding: 10px;
+    background: #ccc;
+    color: #333;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+}

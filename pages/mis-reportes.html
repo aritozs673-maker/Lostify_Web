@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis Reportes - Lostify</title>
+    <link rel="stylesheet" href="../assets/css/reportes.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="logo">Lostify</div>
+        <div class="user-info"></div>
+    </header>
+
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">Menú</div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-house"></i> Dashboard</a></li>
+            <li><a href="perfil.html"><i class="fa-solid fa-user-pen"></i> Mi Perfil</a></li>
+            <li><a href="filtrar.html"><i class="fa fa-search"></i>Buscar Objetos</a></li>
+            <li><a href="crear-reporte.html"><i class="fa-solid fa-plus-circle"></i> Crear Reporte</a></li>
+            <li><a href="../assets/documentos/Manual_de_Usuario.pdf" download="Manual_de_Usuario.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Usuario</a></li>
+            <li><a href="../assets/documentos/MANUAL_Tecnico.pdf" download="MANUAL_Tecnico.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Tecnico</a></li>
+            
+            <li><button class="logout-btn" onclick="logout()"><i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión</button></li>
+        </ul>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <div class="container">
+        <div class="header-container">
+            <h1 class="titulo"><i class="fa-solid fa-clipboard-list"></i> Mis Reportes</h1>
+            <a href="crear-reporte.html" class="btn-nuevo">
+                <i class="fa-solid fa-plus"></i> Nuevo
+            </a>
+        </div>
+
+        <div id="reportesGrid" class="reportes-lista"></div>
+    </div>
+
+    <script src="../assets/js/mis-reportes.js"></script>
+</body>
+</html>

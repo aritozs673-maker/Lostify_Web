@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lostify - Dashboard</title>
+
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <!-- CSS externo -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="logo">Lostify</div>
+        <div class="user-info"></div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">Menú</div>
+        <ul class="sidebar-menu">
+            <li><a href="perfil.html"><i class="fa-solid fa-user-pen"></i> Mi Perfil</a></li>
+            <li><a href="filtrar.html"><i class="fa fa-search"></i>Buscar Objetos</a></li>
+            <li><a href="mis-reportes.html"><i class="fa-solid fa-clipboard-list"></i> Mis Reportes</a></li>
+            <li><a href="../assets/documentos/Manual_de_Usuario.pdf" download="Manual_de_Usuario.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Usuario</a></li>
+            <li><a href="../assets/documentos/MANUAL_Tecnico.pdf" download="MANUAL_Tecnico.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Tecnico</a></li>
+            <li>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="container">
+        <h1 class="titulo">Objetos Perdidos y Encontrados</h1>
+
+        <div class="grid" id="reportesGrid">
+            <!-- Cards se llenarán con JS -->
+        </div>
+    </div>
+
+    <!-- SCRIPT -->
+    <script>
+const API_URL = "http://127.0.0.1:8000/api";
+
+
+    function toggleMenu(){
+    console.log("MENU CLICK");
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+
+function logout(){
+    localStorage.removeItem("token");
+    window.location.href = "login.html";
+}
+
+async function cargarReportes(){
+
+    const token = localStorage.getItem("token");
+    if(!token){
+        window.location.href = "login.html";
+        return;
+    }
+
+    try {
+        const res = await fetch(`${API_URL}/reportes`, {
+            headers: {
+                "Authorization": "Bearer " + token
+            }
+        });
+
+        if(!res.ok) throw new Error("No se pudieron cargar los reportes");
+
+        const data = await res.json();
+
+        const reportes = data.data || [];
+        const grid = document.getElementById("reportesGrid");
+
+        grid.innerHTML = "";
+
+        reportes.forEach(reporte => {
+            console.log(reporte.objeto?.imagen);
+            const imgSrc = reporte.objeto?.imagen
+    ? `http://127.0.0.1:8000/storage/${reporte.objeto.imagen}`
+    : `http://127.0.0.1:8000/storage/imagenes/default1.png`;
+            const estadoClass =
+                reporte.objeto?.estado?.nombre_estado?.toLowerCase() === "perdido"
+                    ? "perdido"
+                    : "encontrado";
+
+            grid.innerHTML += `
+                <div class="card">
+                    <img src="${imgSrc}" alt="Objeto">
+                    <div class="card-content">
+                        <h3>${reporte.objeto?.nombre_obj || "Objeto"}</h3>
+                        <p><strong>Ubicación:</strong> ${reporte.objeto?.ubicacion?.nombre_ubi || "Sin ubicación"}</p>
+                        <p><strong>Descripción:</strong> ${reporte.descripcion || "Sin descripción"}</p>
+                        <p><strong>Fecha:</strong> ${new Date(reporte.created_at).toLocaleDateString()}</p>
+                        <span class="estado ${estadoClass}">
+                            ${reporte.objeto?.estado?.nombre_estado }
+                        </span>
+                    </div>
+                </div>
+            `;
+        });
+
+    } catch(err){
+        console.error(err);
+        document.getElementById("reportesGrid").innerHTML =
+            `<p>Error al cargar reportes</p>`;
+    }
+}
+
+window.onload = cargarReportes;
+</script>
+</body>
+</html>

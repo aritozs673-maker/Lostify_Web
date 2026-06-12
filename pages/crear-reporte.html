@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Crear Reporte - Lostify</title>
+    <link rel="stylesheet" href="../assets/css/crear-reporte.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="menu-btn" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </div>
+        <div class="logo">Lostify</div>
+        <div class="user-info"></div>
+    </header>
+
+    <!-- SIDEBAR -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">Menú</div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html"><i class="fa-solid fa-home"></i> Dashboard</a></li>
+            <li><a href="perfil.html"><i class="fa-solid fa-user-pen"></i> Mi Perfil</a></li>
+            <li><a href="filtrar.html"><i class="fa fa-search"></i>Buscar Objetos</a></li>
+            <li><a href="mis-reportes.html"><i class="fa-solid fa-clipboard-list"></i> Mis Reportes</a></li>
+            <li><a href="../assets/documentos/Manual_de_Usuario.pdf" download="Manual_de_Usuario.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Usuario</a></li>
+            <li><a href="../assets/documentos/MANUAL_Tecnico.pdf" download="MANUAL_Tecnico.pdf"><i class="fa-solid fa-file-pdf"></i> Manual de Tecnico</a></li>
+            <li>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <!-- OVERLAY -->
+    <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
+
+    <!-- MENSAJE -->
+    <div id="mensaje" class="mensaje" style="display: none;"></div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="container">
+        <h1 class="titulo"><i class="fa-solid fa-plus-circle"></i> Nuevo Reporte</h1>
+
+        <form id="formReporte">
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-tag"></i> Nombre del objeto</label>
+                    <input type="text" name="nombre" placeholder="Ej: Mochila azul" required>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-align-left"></i> Descripción</label>
+                    <input type="text" name="descripcion" placeholder="Ej: Mochila con cierre roto" required>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-location-dot"></i> Ubicación</label>
+                    <select name="ubicacion_id" id="ubicaciones" required>
+                        <option value="">Selecciona ubicación</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-list"></i> Categoría</label>
+                    <select name="categoria_id" id="categorias" required>
+                        <option value="">Selecciona categoría</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label><i class="fa-solid fa-circle-info"></i> Estado</label>
+                    <select name="estado_id" id="estados" required>
+                        <option value="">Selecciona estado</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label><i class="fa-solid fa-image"></i> Imagen (opcional)</label>
+                    <input type="file" name="foto" accept="image/*">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-crear">
+                <i class="fa-solid fa-floppy-disk"></i> Guardar Reporte
+            </button>
+        </form>
+    </div>
+
+    <script>
+const API = "http://127.0.0.1:8000/api";
+
+function toggleMenu() {
+    document.getElementById("sidebar").classList.toggle("active");
+    document.getElementById("overlay").classList.toggle("active");
+}
+
+function logout() {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    window.location.href = "login.html";
+}
+
+async function cargarSelects() {
+    const token = localStorage.getItem("token");
+    if (!token) {
+        window.location.href = "login.html";
+        return;
+    }
+
+    const headers = { "Authorization": "Bearer " + token };
+
+    try {
+        const [resUbi, resCat, resEst] = await Promise.all([
+            fetch(`${API}/ubicaciones`, { headers }),
+            fetch(`${API}/categorias`, { headers }),
+            fetch(`${API}/estados`, { headers })
+        ]);
+
+        const ubiData = await resUbi.json();
+        const catData = await resCat.json();
+        const estData = await resEst.json();
+
+        const ubicaciones = ubiData.data || ubiData;
+        const categorias = catData.data || catData;
+        const estados = estData.data || estData;
+
+        llenarSelect("ubicaciones", ubicaciones);
+        llenarSelect("categorias", categorias);
+        llenarSelect("estados", estados);
+    } catch (err) {
+        console.error("Error:", err);
+    }
+}
+
+function llenarSelect(id, data) {
+    const select = document.getElementById(id);
+    if (!Array.isArray(data)) return;
+
+    data.forEach(item => {
+        const nombre = item.nombre_estado || item.nombre_cat || item.nombre_ubi || "Sin nombre";
+        select.innerHTML += `<option value="${item.id}">${nombre}</option>`;
+    });
+}
+
+function mostrarMensaje(texto, tipo) {
+    const mensaje = document.getElementById("mensaje");
+    mensaje.style.display = "block";
+    mensaje.innerText = texto;
+    mensaje.className = "mensaje mensaje-" + tipo;
+    
+    setTimeout(() => { mensaje.style.display = "none"; }, 5000);
+}
+
+document.getElementById("formReporte").addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const token = localStorage.getItem("token");
+    const user = JSON.parse(localStorage.getItem("user"));
+
+    if (!token || !user) {
+        alert("Debes iniciar sesión");
+        return;
+    }
+
+    const formData = new FormData(e.target);
+    formData.append("user_id", user.id);
+
+    try {
+        const res = await fetch(`${API}/reportes/public`, {
+            method: "POST",
+            headers: { "Authorization": "Bearer " + token },
+            body: formData
+        });
+
+        const data = await res.json();
+        console.log("RESPUESTA:", data);
+
+        if (data.success) {
+            mostrarMensaje(" Reporte creado exitosamente!", "success");
+            setTimeout(() => { window.location.href = "dashboard.html"; }, 2000);
+        } else {
+            mostrarMensaje(" Error: " + (data.message || "Error al crear"), "error");
+        }
+    } catch (err) {
+        console.error(err);
+        mostrarMensaje(" Error de conexión", "error");
+    }
+});
+
+// INIT
+window.onload = cargarSelects;
+</script>
+</body>
+</html>

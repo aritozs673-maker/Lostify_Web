@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro - Lostify</title>
+    <link rel="stylesheet" href="../assets/css/register.css">
+</head>
+<body>
+
+<div class="register-box">
+    <h1>Lostify</h1>
+    <p class="sub">Registro Institucional</p>
+
+    <!-- Mensajes -->
+    <div id="errorBox" class="error" style="display: none;"></div>
+    <div id="successBox" class="success" style="display: none;"></div>
+
+    <form id="registerForm">
+        <div class="input-group">
+            <label>Nombre Completo</label>
+            <input type="text" id="name" name="name" required>
+        </div>
+        
+        <div class="input-group">
+            <label>Apellido Paterno</label>
+            <input type="text" id="apellido_paterno" name="apellido_paterno" required>
+        </div>
+        
+        <div class="input-group">
+            <label>Apellido Materno</label>
+            <input type="text" id="apellido_materno" name="apellido_materno">
+        </div>
+
+        <div class="input-group">
+            <label>Correo Institucional</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+
+        <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+
+        <div class="input-group">
+            <label>Confirmar Contraseña</label>
+            <input type="password" id="password_confirmation" name="password_confirmation" required>
+        </div>
+
+        <button type="submit" class="btn">Crear Cuenta</button>
+    </form>
+
+    <div class="login-link">
+        ¿Ya tienes cuenta?
+        <a href="login.html">Iniciar Sesión</a>
+    </div>
+</div>
+
+<script src="../assets/js/register.js"></script>
+</body>
+</html>
